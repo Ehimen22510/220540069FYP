@@ -41,11 +41,11 @@ if usermsg := st.chat_input('type a message'):
         strem = st.empty()
         full_msg = ''
         context = ChatbotFunctions.retrieval(vector_store=vectors,question=usermsg, knn = 40)
-        temp =  "please answer the following question {question} using the context {context}. You are an assistant in Queen mary's university of london and you are talking to a student, if there are no documents provided then prompt user to elaborate on their question. please use a friendly demeanor. write 2 paragraphs max and consider the chat history:{history}"
+        temp =  "please answer the following question {question} using the context {context}. You are an assistant in Queen mary's university of london and you are talking to a student, if there are no documents provided then prompt user to elaborate on their question. please use a friendly demeanor. write 2 paragraphs max."
 
         prompt = ChatPromptTemplate.from_template(temp)
         chain = prompt | llmodel | StrOutputParser()
-        for chunk in chain.stream({"context":context, "question":usermsg, 'history': st.session_state.messages}):
+        for chunk in chain.stream({"context":context, "question":usermsg}):
             full_msg += chunk
             strem.markdown(full_msg)
         st.session_state.messages.append({'role': 'assistant', 'content':full_msg})
