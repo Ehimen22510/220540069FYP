@@ -6,3 +6,5 @@ langchain_core
 langchain_openai
 langchain_pinecone 
 dotenv
+sentence_transformers
+numpy >= 1.26.4
